@@ -5,11 +5,15 @@ export const LabelledInputNumberType = 'number';
 export const LabelledInputEmailType = 'email';
 export const LabelledInputSubmitType = 'submit';
 
-function LabelledInput({ type = LabelledInputTextType, label = false }) {
+function LabelledInput({
+	type = LabelledInputTextType,
+	label = false,
+	name = '',
+}) {
 	return (
 		<>
-			{label && <label htmlFor=''>{label}</label>}
-			<input required type={type} />
+			{label && <label htmlFor={name}>{label}</label>}
+			<input required id={name} name={name} type={type} />
 		</>
 	);
 }
