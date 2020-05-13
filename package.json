@@ -1,0 +1,22 @@
+{
+  "name": "js-react-test",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Ian Outterside <ian@komododigital.co.uk>",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "start": "concurrently \"yarn run start-server\" \"yarn run start-client\"",
+    "stop": "yarn run stop-server",
+    "start-client": "cd client && yarn start",
+    "start-server": "cd server && yarn start",
+    "stop-server": "cd server && yarn stop"
+  },
+  "dependencies": {
+    "concurrently": "^4.1.0"
+  }
+}
