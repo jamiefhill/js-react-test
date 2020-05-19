@@ -1,0 +1,9 @@
+{
+	"dependencies": {
+		"knex": "^0.21.1",
+		"mysql": "^2.18.1"
+	},
+	"scripts": {
+		"start": "dockerize -wait tcp://mysql_db:3306 -timeout 120s && knex migrate:latest"
+	}
+}

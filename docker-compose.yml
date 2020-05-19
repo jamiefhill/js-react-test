@@ -2,6 +2,7 @@ version: '3'
 services:
   mysql:
     image: mysql:5.7
+    container_name: mysql_db
     environment:
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
       - MYSQL_DATABASE=${DB_DATABASE}
@@ -9,6 +10,12 @@ services:
       - 3306:3306
     volumes:
       - '/var/lib/mysql'
+  db-seed:
+    build: ./db-seed/
+    env_file:
+      - .env
+    depends_on:
+      - mysql
   contact_api:
     build: ./server/
     volumes:
@@ -18,8 +25,8 @@ services:
       - 8080:8080
     env_file:
       - .env
-    links:
-      - mysql
+    depends_on:
+      - db-seed
   client:
     build: ./client/
     volumes:
@@ -30,7 +37,7 @@ services:
     environment:
       - CHOKIDAR_USEPOLLING=true
       - PORT=${CLIENT_PORT}
-    links:
+    depends_on:
       - contact_api
 networks:
   webnet:
