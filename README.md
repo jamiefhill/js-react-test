@@ -6,6 +6,7 @@
 - Added knex db-seed project with migrations and seed data.
 - Updated api to insert form submitted data to database.
 - Added state based message/error logging on the front end for contact submissions.
+- Added adminer as a database viewer, I'd rather not have this in the project setup but its asked for. I prefer to use standalone sql clients as part of my own development environment.
 
 ## Running the project
 
