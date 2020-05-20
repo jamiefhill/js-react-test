@@ -6,7 +6,11 @@ function Person() {
 	return (
 		<div className='App'>
 			<h1>Message</h1>
-			<LabelledInput label={'Message:'} type={LabelledInputTextType} />
+			<LabelledInput
+				label={'Message:'}
+				name={'message'}
+				type={LabelledInputTextType}
+			/>
 		</div>
 	);
 }

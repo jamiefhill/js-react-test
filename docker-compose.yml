@@ -1,0 +1,43 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: mysql_db
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE=${DB_DATABASE}
+    ports:
+      - 3306:3306
+    volumes:
+      - '/var/lib/mysql'
+  db-seed:
+    build: ./db-seed/
+    env_file:
+      - .env
+    depends_on:
+      - mysql
+  contact_api:
+    build: ./server/
+    volumes:
+      - ./server:/usr/app
+      - '/usr/app/node_modules'
+    ports:
+      - 8080:8080
+    env_file:
+      - .env
+    depends_on:
+      - db-seed
+  client:
+    build: ./client/
+    volumes:
+      - ./client:/usr/app
+      - '/usr/app/node_modules'
+    ports:
+      - 80:3000
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - PORT=${CLIENT_PORT}
+    depends_on:
+      - contact_api
+networks:
+  webnet:

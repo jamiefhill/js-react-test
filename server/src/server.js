@@ -1,70 +1,142 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const path = require('path');
 const mysql = require('mysql');
-const cors = require('cors')
-
+const cors = require('cors');
+const multer = require('multer');
+const upload = multer();
 const PORT = process.env.PORT || 8080;
 const app = express();
-
-//STATIC FOLDER
-app.use(express.static(path.join(__dirname, '../client/build')));
-
-// Body Parser Middleware
-app.use(bodyParser.json());
+const httpStatusCodes = require('http-status-codes');
 
 // Deal with CORS
-app.use(cors())
+app.use(cors());
 
 //CREATE CONNECTION
 // @see documentenation at https://github.com/mysqljs/mysql
 const db = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE
+	host: process.env.DB_HOST,
+	user: process.env.DB_USER,
+	password: process.env.DB_PASSWORD,
+	database: process.env.DB_DATABASE,
 });
 
 //CONNECT
 db.connect((err) => {
-  if (err) throw err;
-  console.log('MySQL Connected...');
+	if (err) throw err;
+	console.log('MySQL Connected...');
 });
+
+//QUERY
+const query = (sql, args) => {
+	return new Promise((resolve, reject) => {
+		db.query(sql, args, (err, rows) => {
+			if (err) return reject(err);
+			resolve(rows);
+		});
+	});
+};
+
+const findAuthorId = async (email) => {
+	const author = await query(`select id from contact where email = ?`, email);
+	if (author[0]) {
+		return author[0].id;
+	}
+};
+
+const addAuthor = async (
+	firstname,
+	lastname,
+	email,
+	telephone,
+	housenumber,
+	street,
+	city,
+	county,
+	country
+) => {
+	const result = await query(
+		`insert into contact (first_name, last_name, email, telephone, house_number, street, city, county, country) values (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+		[
+			firstname,
+			lastname,
+			email,
+			telephone,
+			housenumber,
+			street,
+			city,
+			county,
+			country,
+		]
+	);
+	if (result.affectedRows === 1) {
+		return result.insertId;
+	}
+};
+
+const addMessage = async (authorId, message) => {
+	const result = await query(
+		`insert into messages (author, message) values (?, ?)`,
+		[authorId, message]
+	);
+	if (result.affectedRows === 1) {
+		console.log('New contact message added to the database!');
+		return result.insertId;
+	}
+};
 
 // Start Express listening
 app.listen(PORT, () => {
-  console.log(`Server started on port ${PORT}`);
-})
+	console.log(`Server started on port ${PORT}`);
+});
 
 // Test
 
 // Test to make sure the API can talk to React
 app.get('/', (req, res) => {
-  return res.json({
-    status: res.statusCode,
-    data: {
-      message: 'API Active'
-    }
-  });
+	console.log('get / ');
+	return res.json({
+		status: res.statusCode,
+		data: {
+			message: 'API Active',
+		},
+	});
 });
 
 // An echo, to help with debugging
 app.post('/', (req, res) => {
-  return res.json({
-    status: res.statusCode,
-    data: {
-      message: 'ECHO!',
-      posted: req.body
-    }
-  });
+	return res.json({
+		status: res.statusCode,
+		data: {
+			message: 'ECHO!',
+			posted: req.body,
+		},
+	});
 });
 
 // An API endpoint to store form post data
-app.post('/create', (req, res) => {
-  return res.json({
-    status: res.statusCode,
-    data: {
-      message: 'Success',
-    }
-  });
+app.post('/create', upload.none(), async (req, res) => {
+	let authorId = await findAuthorId(req.body.email);
+	if (!authorId) {
+		authorId = await addAuthor(
+			req.body.firstname,
+			req.body.lastname,
+			req.body.email,
+			req.body.telephone,
+			req.body.housenumber,
+			req.body.street,
+			req.body.city,
+			req.body.county,
+			req.body.country
+		);
+		if (!authorId) {
+			return res.sendStatus(httpStatusCodes.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	const messageId = await addMessage(authorId, req.body.message);
+
+	if (messageId) {
+		res.sendStatus(httpStatusCodes.OK);
+	} else {
+		res.sendStatus(httpStatusCodes.INTERNAL_SERVER_ERROR);
+	}
 });

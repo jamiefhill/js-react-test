@@ -9,9 +9,17 @@ function Communicate() {
 	return (
 		<div className='App'>
 			<h1>Communication</h1>
-			<LabelledInput label={'Telephone:'} type={LabelledInputNumberType} />
+			<LabelledInput
+				label={'Telephone:'}
+				name={'telephone'}
+				type={LabelledInputNumberType}
+			/>
 			<br />
-			<LabelledInput label={'Email:'} type={LabelledInputEmailType} />
+			<LabelledInput
+				label={'Email:'}
+				name={'email'}
+				type={LabelledInputEmailType}
+			/>
 		</div>
 	);
 }

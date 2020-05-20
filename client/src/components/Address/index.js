@@ -6,15 +6,35 @@ function Address() {
 	return (
 		<div className='App'>
 			<h1>Address</h1>
-			<LabelledInput label={'House Number:'} type={LabelledInputTextType} />
+			<LabelledInput
+				label={'House Number:'}
+				type={LabelledInputTextType}
+				name={'housenumber'}
+			/>
 			<br />
-			<LabelledInput label={'Street:'} type={LabelledInputTextType} />
+			<LabelledInput
+				label={'Street:'}
+				type={LabelledInputTextType}
+				name={'street'}
+			/>
 			<br />
-			<LabelledInput label={'City:'} type={LabelledInputTextType} />
+			<LabelledInput
+				label={'City:'}
+				type={LabelledInputTextType}
+				name={'city'}
+			/>
 			<br />
-			<LabelledInput label={'County:'} type={LabelledInputTextType} />
+			<LabelledInput
+				label={'County:'}
+				type={LabelledInputTextType}
+				name={'county'}
+			/>
 			<br />
-			<LabelledInput label={'Country:'} type={LabelledInputTextType} />
+			<LabelledInput
+				label={'Country:'}
+				type={LabelledInputTextType}
+				name={'country'}
+			/>
 		</div>
 	);
 }
