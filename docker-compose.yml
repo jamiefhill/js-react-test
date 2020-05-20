@@ -16,13 +16,20 @@ services:
       - .env
     depends_on:
       - mysql
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - db-seed
   contact_api:
     build: ./server/
     volumes:
       - ./server:/usr/app
       - '/usr/app/node_modules'
     ports:
-      - 8080:8080
+      - 3001:8080
     env_file:
       - .env
     depends_on:

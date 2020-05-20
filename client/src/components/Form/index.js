@@ -13,7 +13,7 @@ function Form({ children }) {
 		const data = new FormData(event.target);
 		event.currentTarget.reset();
 		const response = await superagent
-			.post('http://localhost:8080/create')
+			.post('http://localhost:3001/create')
 			.send(data);
 		if (response.status === httpStatusCodes.OK) {
 			setData({ message: 'Your contact request has been sent.', sent: true });

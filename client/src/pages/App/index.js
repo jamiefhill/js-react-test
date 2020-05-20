@@ -17,7 +17,7 @@ function App() {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const data = await fetch('http://localhost:8080/').then((res) =>
+			const data = await fetch('http://localhost:3001/').then((res) =>
 				res.json()
 			);
 			setData({
