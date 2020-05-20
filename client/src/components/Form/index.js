@@ -5,6 +5,7 @@ function Form({ children }) {
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		const data = new FormData(event.target);
+		event.currentTarget.reset();
 		await superagent.post('http://localhost:8080/create').send(data);
 	};
 
