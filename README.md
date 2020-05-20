@@ -1,7 +1,30 @@
-# Your Challenge
+## Work notes
+
+- Initially added react components to split form into separate parts for address, contact, etc
+- Updated the labelled component to take a name prop, allowing key/value pairs to send to the api
+- Discovered that the database server was running in the same script command as the api, this isn't a great way to do anything. I appreaciate that this is probably been done for the purposes of creating the migration task step. I reworked the project to use docker-compose and individual docker files as a more standard approach, which if you use a temporary volume (not linked to a local directory) you can have the same non-persistent database. Also updated pm2 in the api to log out what is happening so that console.log's in the api can be used for debug. pm2 --watch seems not that robust for picking up files changes during development, however, its more useful this way that it was originally.
+- Added knex db-seed project with migrations and seed data.
+- Updated api to insert form submitted data to database.
+- Added state based message/error logging on the front end for contact submissions.
+
+## Running the project
+
+### Start up
+
+`docker-compose up --build`
+
+You may not need to build on subsequent runs. You can optionally run it with `-d` to detatch it from the terminal, however for development purposes its good to see terminal log output as the system is running.
+
+### Shut down
+
+`ctrl-d`
+
+`docker-compose down`
+
+## Your Challenge
 
 Your challenge is a mix of tasks focussed around the day to day role of a JavaScript Node + React developer.
-You may not get all of the tasks below completed, and it's at your discretion which you focus the most time to within each task. 
+You may not get all of the tasks below completed, and it's at your discretion which you focus the most time to within each task.
 Don't worry about spending too much time styling on the user interface - please simply ensure you are using semantic HTML and it is in a presentable state.
 
 Please spend around 3 hours on the challenge, plus any time needed to get your environment up and running. If you need any assistance getting your environment running, please contact `ian@komododigital.co.uk` or the Komodo offices and we will support ASAP. Do not worry if you do not complete the challenge or the stretch goals. Please spend your time as you best see fit, particularly with a view to demonstrating your technical strengths.
@@ -21,8 +44,8 @@ You must be able to provide your solution, in whole, in a zip file to Komodo to 
 1. Setup and ensure the development environment is running correctly. Follow the setup instructions in `docs/setup.md`.
    - Visiting `http://localhost:3000/` - make sure you see a contact form with one field
    - Visiting `http://localhost:8080/` - make sure you see a response of `{"status":200,"data":{"message":"API Active"}}`.
-2. Expand upon the "contact us" form to capture the users full name, address, telephone number, email address, and a message / note by creating sensible components. 
-   - Ensure to add in relevant validation. 
+2. Expand upon the "contact us" form to capture the users full name, address, telephone number, email address, and a message / note by creating sensible components.
+   - Ensure to add in relevant validation.
 3. Store submissions from the form into a sensibly structured MySQL database.
    - Include database migrations for the database schema.
    - Add a seeder for fake / test submissions.
@@ -36,13 +59,13 @@ You must be able to provide your solution, in whole, in a zip file to Komodo to 
 
 ## Rules and Notes
 
- - **If you get stuck or have any questions - ask for help!**
- - Please ensure that the solution you supply back to Komodo is in a fit and working state for review.
-   > Please include any documentation or additional setup instructions we need in order to run and test your solution.
-   > Your solution will be run and tested on Mac OS X
- - Feel free to use the internet as much as you would like to help you complete the task.
- - You may take which ever approach you see fit to solving the problem, using the provided components or entirely new ones.
- - Novel, efficient and sensible solutions are encouraged.
+- **If you get stuck or have any questions - ask for help!**
+- Please ensure that the solution you supply back to Komodo is in a fit and working state for review.
+  > Please include any documentation or additional setup instructions we need in order to run and test your solution.
+  > Your solution will be run and tested on Mac OS X
+- Feel free to use the internet as much as you would like to help you complete the task.
+- You may take which ever approach you see fit to solving the problem, using the provided components or entirely new ones.
+- Novel, efficient and sensible solutions are encouraged.
 
 ## Other Notes
 
