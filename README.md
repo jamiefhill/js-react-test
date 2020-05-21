@@ -7,6 +7,7 @@
 - Updated api to insert form submitted data to database.
 - Added state based message/error logging on the front end for contact submissions.
 - Added adminer as a database viewer, I'd rather not have this in the project setup but its asked for. I prefer to use standalone sql clients as part of my own development environment.
+- Refactored MYSQL connections. It's really bad practice to include the db connection in one file, there was no error handling built in and the modern async/await benefits were completely lost. Tests have been added to cover positive results as well as error handling. The only part that needs is test is if MySQL reports back that it failed to close a connection pool. I'm not sure how this would be done.
 
 ## Running the project
 
@@ -15,6 +16,18 @@
 `docker-compose up --build`
 
 You may not need to build on subsequent runs. You can optionally run it with `-d` to detatch it from the terminal, however for development purposes its good to see terminal log output as the system is running.
+
+### Tests
+
+With jest installed globally:
+
+To run tests, ensure system is running with `docker-compose up`
+
+On a local terminal in the root directory:
+
+`jest --coverage`
+
+`jest <test-pattern-match>`
 
 ### Shut down
 
