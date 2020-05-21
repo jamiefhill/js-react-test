@@ -34,6 +34,10 @@ services:
       - .env
     depends_on:
       - db-seed
+  swagger:
+    image: swaggerapi/swagger-editor
+    ports:
+      - '3080:8080'
   client:
     build: ./client/
     volumes:
