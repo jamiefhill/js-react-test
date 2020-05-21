@@ -9,4 +9,5 @@ module.exports = {
 	ECHO_MESSAGE,
 	ACTIVE_MESSAGE,
 	NEW_MESSAGE_SAVED,
+	TEST_END_POINT_HIT,
 };
