@@ -4,6 +4,8 @@ const {
 	echoController,
 	createController,
 } = require('./EndPoints');
+const { ROOT, CREATE } = require('./RouteConstants');
+const { SERVER_START } = require('./CopyContants');
 const cors = require('cors');
 const multer = require('multer');
 const upload = multer();
@@ -15,14 +17,14 @@ app.use(cors());
 
 // Start Express listening
 app.listen(PORT, () => {
-	console.log(`Server started on port ${PORT}`);
+	console.log(`${SERVER_START} ${PORT}`);
 });
 
 // Test to make sure the API can talk to React
-app.get('/', testController);
+app.get(`${ROOT}`, testController);
 
 // An echo, to help with debugging
-app.post('/', echoController);
+app.post(`${ROOT}`, echoController);
 
 // An API endpoint to store form post data
-app.post('/create', upload.none(), createController);
+app.post(`${ROOT}${CREATE}`, upload.none(), createController);

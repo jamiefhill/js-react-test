@@ -1,13 +1,18 @@
 const { addMessage } = require('./DBQueries');
 const { findOrAddAuthor } = require('./AuthorService');
 const httpStatusCodes = require('http-status-codes');
+const {
+	ECHO_MESSAGE,
+	ACTIVE_MESSAGE,
+	TEST_END_POINT_HIT,
+} = require('./CopyContants');
 
 const testController = (req, res) => {
-	console.log('get / ');
+	console.log(TEST_END_POINT_HIT);
 	return res.json({
 		status: res.statusCode,
 		data: {
-			message: 'API Active',
+			message: ACTIVE_MESSAGE,
 		},
 	});
 };
@@ -16,7 +21,7 @@ const echoController = (req, res) => {
 	return res.json({
 		status: res.statusCode,
 		data: {
-			message: 'ECHO!',
+			message: ECHO_MESSAGE,
 			posted: req.body,
 		},
 	});
