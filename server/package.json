@@ -13,12 +13,14 @@
 		"multer": "^1.4.2",
 		"mysql": "^2.17.1",
 		"path": "^0.12.7",
-		"pm2": "^3.5.1"
+		"pm2": "^3.5.1",
+		"swagger-jsdoc": "^4.0.0"
 	},
 	"scripts": {
 		"start": "pm2 start src/server.js --watch && pm2 log",
 		"test": "./node_modules/.bin/jest --detectOpenHandles",
 		"coverage": "./node_modules/.bin/jest --coverage",
-		"lint": "./node_modules/.bin/eslint src/** tests/**/*.test.js"
+		"lint": "./node_modules/.bin/eslint src/** tests/**/*.test.js",
+		"swagger": "./node_modules/.bin/swagger-jsdoc -d swagger/swaggerDef.js -o swagger/swagger.json"
 	}
 }
