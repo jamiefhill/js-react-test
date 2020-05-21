@@ -46,5 +46,3 @@ services:
       - PORT=${CLIENT_PORT}
     depends_on:
       - contact_api
-networks:
-  webnet:
