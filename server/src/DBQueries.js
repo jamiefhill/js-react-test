@@ -1,9 +1,10 @@
 const { query } = require('./MySQLConnection');
 const { NEW_MESSAGE_SAVED } = require('./CopyContants');
 
-const findAuthorSQL = `select id from contact where email = ?`;
-const insertAuthorSQL = `insert into contact (first_name, last_name, email, telephone, house_number, street, city, county, country) values (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-const insertMessageSQL = `insert into messages (author, message) values (?, ?)`;
+const findAuthorSQL = 'select id from contact where email = ?';
+const insertAuthorSQL =
+	'insert into contact (first_name, last_name, email, telephone, house_number, street, city, county, country) values (?, ?, ?, ?, ?, ?, ?, ?, ?)';
+const insertMessageSQL = 'insert into messages (author, message) values (?, ?)';
 
 const findAuthorId = async (email) => {
 	const author = await query(findAuthorSQL, email);

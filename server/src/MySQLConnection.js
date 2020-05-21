@@ -4,11 +4,11 @@ const mysql = require('mysql');
 // @see documentenation at https://github.com/mysqljs/mysql
 let dbPool = null;
 
-const getConnection = () => {
-	return new Promise(async (resolve, reject) => {
-		if (!dbPool) {
-			await startPool();
-		}
+const getConnection = async () => {
+	if (!dbPool) {
+		await startPool();
+	}
+	return new Promise((resolve, reject) => {
 		dbPool.getConnection((err, conn) => {
 			if (err) return reject(err);
 			resolve(conn);
@@ -17,10 +17,10 @@ const getConnection = () => {
 };
 
 //QUERY
-const query = (sql, args) => {
-	return new Promise(async (resolve, reject) => {
+const query = async (sql, args) => {
+	const db = await getConnection();
+	return new Promise((resolve, reject) => {
 		try {
-			const db = await getConnection();
 			db.query(sql, args, async (err, rows) => {
 				db.release();
 				if (err) return reject(err);
@@ -33,7 +33,7 @@ const query = (sql, args) => {
 };
 
 const closePool = () => {
-	return new Promise(async (resolve, reject) => {
+	return new Promise((resolve, reject) => {
 		try {
 			dbPool.end((err) => {
 				dbPool = null;

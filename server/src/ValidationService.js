@@ -15,6 +15,8 @@ const getContactFormValidationSchema = () => {
 			.regex(whiteSpacePuncString),
 		email: Joi.string().email({ minDomainSegments: 2 }).required(),
 		telephone: Joi.string().regex(
+			/* Possibly esline config, does not recognise \. in regex */
+			/* eslint-disable-next-line */
 			/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/
 		),
 		housenumber: Joi.string()
