@@ -1,5 +1,5 @@
 const express = require('express');
-const mysql = require('mysql');
+const { query } = require('./MySQLConnection');
 const cors = require('cors');
 const multer = require('multer');
 const upload = multer();
@@ -9,31 +9,6 @@ const httpStatusCodes = require('http-status-codes');
 
 // Deal with CORS
 app.use(cors());
-
-//CREATE CONNECTION
-// @see documentenation at https://github.com/mysqljs/mysql
-const db = mysql.createConnection({
-	host: process.env.DB_HOST,
-	user: process.env.DB_USER,
-	password: process.env.DB_PASSWORD,
-	database: process.env.DB_DATABASE,
-});
-
-//CONNECT
-db.connect((err) => {
-	if (err) throw err;
-	console.log('MySQL Connected...');
-});
-
-//QUERY
-const query = (sql, args) => {
-	return new Promise((resolve, reject) => {
-		db.query(sql, args, (err, rows) => {
-			if (err) return reject(err);
-			resolve(rows);
-		});
-	});
-};
 
 const findAuthorId = async (email) => {
 	const author = await query(`select id from contact where email = ?`, email);
