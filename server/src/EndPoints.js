@@ -1,5 +1,6 @@
 const { addMessage } = require('./DBQueries');
 const { findOrAddAuthor } = require('./AuthorService');
+const { validateContactForm } = require('./ValidationService');
 const httpStatusCodes = require('http-status-codes');
 const {
 	ECHO_MESSAGE,
@@ -28,6 +29,7 @@ const echoController = (req, res) => {
 };
 
 const createController = async (req, res) => {
+	validateContactForm(req.body);
 	const authorId = await findOrAddAuthor(
 		req.body.firstname,
 		req.body.lastname,

@@ -18,9 +18,9 @@ describe('End points will provide responses to api end point requests', () => {
 	const invalidMessage =
 		'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz';
 	const failedToAddMessage =
-		"ER_DATA_TOO_LONG: Data too long for column 'message' at row 1";
+		'"message" length must be less than or equal to 255 characters long';
 	const failedToAddAuthor =
-		"ER_DATA_TOO_LONG: Data too long for column 'first_name' at row 1";
+		'"firstname" length must be less than or equal to 255 characters long';
 	const validNewEmail = 'sally@ent.com';
 	const deleteByEmailSQL = 'delete from contact where email = ?';
 	const dummyBodyContent = 'Body';
@@ -33,7 +33,7 @@ describe('End points will provide responses to api end point requests', () => {
 		street: 'utopia',
 		city: 'planitia',
 		county: 'Casius quadrangle',
-		country: 'mars',
+		country: 'Mars',
 		message: 'I am stuck in a turbo lift',
 	};
 
