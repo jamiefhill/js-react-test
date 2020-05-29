@@ -6,6 +6,15 @@
 - Added knex db-seed project with migrations and seed data.
 - Updated api to insert form submitted data to database.
 - Added state based message/error logging on the front end for contact submissions.
+- Added adminer as a database viewer, I'd rather not have this in the project setup but its asked for. I prefer to use standalone sql clients as part of my own development environment.
+- Refactored MYSQL connections. It's really bad practice to include the db connection in one file, there was no error handling built in and the modern async/await benefits were completely lost. Tests have been added to cover positive results as well as error handling. The only part that needs is test is if MySQL reports back that it failed to close a connection pool. I'm not sure how this would be done.
+- Refactored DB Queries and added tests
+- Refactored end point controllers into a separate module to use with Express end points, split find/add author functionality into sepatate module for code clarity.
+- Moved some constant string data into separate module for code clarity.
+- Unfortunately the way this project is setup the express framework can not be tested as it is run procedurally meaning unit tests can not be applied. I like to wrap my express framework in a class that does server start/stop. This would allow me to write unit/integration tests for express giving a higher level of code coverage, also automated testing of api end points is far better than postman.
+- Added some very liberal server side validation of inputs to demonstrate the process, should be tightened up and better positive/negative tests added to cover edge cases.
+- Added eslint, which I applied to my tests as well as src.
+- Added swagger documentation generation with the swagger editor image in docker-compose.yml
 
 ## Running the project
 
@@ -14,6 +23,40 @@
 `docker-compose up --build`
 
 You may not need to build on subsequent runs. You can optionally run it with `-d` to detatch it from the terminal, however for development purposes its good to see terminal log output as the system is running.
+
+### Tests
+
+With jest installed globally:
+
+To run tests, ensure system is running with `docker-compose up`
+
+On a local terminal in the root directory:
+
+`jest --coverage`
+
+`jest <test-pattern-match>`
+
+### Misc yarn run commands
+
+Server
+
+`yarn run lint`
+
+`yarn run swagger`
+
+### Swagger
+
+Run swagger on:
+
+`http://localhost:3080`
+
+Please note `http` as by default it uses `https` and the api does not respond to `https` at present.
+
+### Database Viewer
+
+Run Adminer on
+
+`http://localhost:8080`
 
 ### Shut down
 

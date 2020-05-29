@@ -34,6 +34,10 @@ services:
       - .env
     depends_on:
       - db-seed
+  swagger:
+    image: swaggerapi/swagger-editor
+    ports:
+      - '3080:8080'
   client:
     build: ./client/
     volumes:
@@ -46,5 +50,3 @@ services:
       - PORT=${CLIENT_PORT}
     depends_on:
       - contact_api
-networks:
-  webnet:
